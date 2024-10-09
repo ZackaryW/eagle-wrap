@@ -15,7 +15,7 @@ readme = "README.md"
 requires-python = ">= 3.8"
 
 [project.scripts]
-eagle_wrap = "eagle_wrap.__main__:cli"
+eaglewrap = "eagle_wrap.__main__:cli"
 
 
 [build-system]

@@ -8,13 +8,13 @@ pip install eagle-wrap
 
 ## features
 - `api wrapper` provides eagle api methods in `api.py` from https://api.eagle.cool/
-- `cli` provides cli interface to bridge js plugin into python environment
+- `cli` offers a command-line interface to bridge plugins into a Python environment
 
 ## plugin bridging
 use
 
 ```bash
-eagle_wrap pyscript [ctx] [script path]
+eaglewrap pyscript [ctx] [script path]
 ```
 
 to create the ctx, use or adapt the following snippet in your plugin
