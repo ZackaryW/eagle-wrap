@@ -1,13 +1,5 @@
-
-from dataclasses import dataclass, field
 import typing
-
-from .api import libraryInfo
-
-@dataclass
-class SentOverCtx:
-    folders : typing.List[str] = field(default_factory=list)
-    items : typing.List[str] = field(default_factory=list)
+from dataclasses import dataclass, field
 
 @dataclass
 class Folder:
@@ -58,8 +50,10 @@ class Library:
 
     @classmethod
     def current(cls):
-        info = libraryInfo()
+        from eaglewrap.api import EagleApi
+        info = EagleApi.libraryInfo()
         assert info
+
         return cls(
             folders=[Folder(**folder) for folder in info["folders"]],
             smartFolders=[SmartFolder(**folder) for folder in info["smartFolders"]],

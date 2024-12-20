@@ -1,0 +1,19 @@
+{
+    "id": "e76e7148-1a90-4c1c-9f54-97a349f9fa29",
+    "version": "1.0.0",
+    "platform": "all",
+    "arch": "all",
+    "name": "eaglewrap-runner-example",
+    "logo": "/logo.png",
+    "keywords": [],
+    "devTools": true,
+    "preview": {
+        "py": {
+            "inspector": {
+                "path": "index.html",
+                "height": 100,
+                "multiSelect": false
+            }
+        }
+    }
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Inspector Plugin Example</title>
+    <style>
+        html {
+            font-size: 11px;
+            font-family: sans-serif;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            color: transparent;
+        }
+
+        /* colors for different themes */
+
+        body[theme="LIGHT"],
+        body[theme="LIGHTGRAY"] {
+            color: black;
+        }
+
+        body[theme="GRAY"],
+        body[theme="BLUE"],
+        body[theme="PURPLE"],
+        body[theme="DARK"] {
+            color: white;
+        }
+    </style>
+    <script src="eagleWrapUtils.js"></script>
+</head>
+
+<body>
+
+    <script>
+        // Create button element
+        const button = document.createElement('button');
+        button.textContent = 'Run Python Script';
+        button.style.margin = '10px';
+        button.style.padding = '5px 10px';
+        document.body.appendChild(button);
+
+        // Add click handler
+        button.addEventListener('click', async () => {
+            try {
+                const selectedItems = await eagle.item.getSelected();
+                console.log("selectedItems: ", selectedItems);
+                const [firstItem] = selectedItems;
+                if (!firstItem) {
+                    throw new Error("No item selected");
+                }
+                const filePath = firstItem.filePath;
+                if (!filePath) {
+                    throw new Error("Selected item has no associated file URL");
+                }
+                const ctxString = await createCtxString(eagle);
+                const result = await executePythonScript(eagle, filePath, ctxString);
+                console.log("Script output:", result);
+                await eagle.notification.show({
+                    title: "Script Output",
+                    body: result,
+                    mute: false,
+                    duration: 3000,
+                    icon: "https://"
+                });
+            } catch (error) {
+                console.error("Error running script:", error);
+            }
+        });
+
+        // Listen to plugin creation
+        eagle.onPluginCreate(async (plugin) => {
+
+            // Get the current theme
+            const theme = await eagle.app.theme;
+            document.body.setAttribute('theme', theme);
+
+            // Get the selected item
+            const item = await eagle.item.getSelected();
+
+            console.log(item);
+            console.log(theme);
+        });
+
+        // Listen to theme changes
+        eagle.onThemeChanged((theme) => {
+            document.body.setAttribute('theme', theme);
+        });
+    </script>
+</body>
+
+</html>

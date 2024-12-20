@@ -1,22 +1,19 @@
 [project]
 name = "eagle-wrap"
-version = "0.1.0"
-description = "eagle.cool api wrapper"
+version = "0.9.0"
+description = "Python wrapper for Eagle"
 authors = [
-    { name = "ZackaryW", email = "gitzackw@gmail.com" }
+    { name = "ZackaryW", email = "36378555+ZackaryW@users.noreply.github.com" }
 ]
 dependencies = [
     "requests>=2.32.3",
     "click>=8.1.7",
 ]
-
-
 readme = "README.md"
 requires-python = ">= 3.8"
 
 [project.scripts]
-eaglewrap = "eagle_wrap.__main__:cli"
-
+eaglewrap = "eaglewrap.__main__:main"
 
 [build-system]
 requires = ["hatchling"]
@@ -24,12 +21,13 @@ build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
-dev-dependencies = [
-    "pytest>=8.3.3",
-]
+dev-dependencies = []
 
 [tool.hatch.metadata]
 allow-direct-references = true
 
+[tool.ruff]
+ignore = ["F401"]
+
 [tool.hatch.build.targets.wheel]
-packages = ["src/eagle_wrap"]
+packages = ["src/eaglewrap"]
