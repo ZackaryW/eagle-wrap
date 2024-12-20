@@ -49,15 +49,7 @@
         button.addEventListener('click', async () => {
             try {
                 const selectedItems = await eagle.item.getSelected();
-                console.log("selectedItems: ", selectedItems);
                 const [firstItem] = selectedItems;
-                if (!firstItem) {
-                    throw new Error("No item selected");
-                }
-                const filePath = firstItem.filePath;
-                if (!filePath) {
-                    throw new Error("Selected item has no associated file URL");
-                }
                 const ctxString = await createCtxString(eagle);
                 const result = await executePythonScript(eagle, filePath, ctxString);
                 console.log("Script output:", result);
