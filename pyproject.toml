@@ -31,3 +31,4 @@ ignore = ["F401"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/eaglewrap"]
+

@@ -1,4 +1,4 @@
-name: CI/CD
+name: update release
 
 on:
   workflow_dispatch:
@@ -33,9 +33,3 @@ jobs:
             eaglewrap-runner-example/eagleWrapUtils.js
           draft: false
           prerelease: false
-
-  build-and-publish:
-    needs: check-and-release
-    uses: ./.github/workflows/python-publish.yml
-    permissions:
-      id-token: write
