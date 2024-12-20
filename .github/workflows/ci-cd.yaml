@@ -1,0 +1,38 @@
+name: CI/CD
+
+on:
+  push:
+    paths:
+      - 'app.json'
+      - 'eaglewrap-runner-example/eagleWrapUtils.js'
+
+jobs:
+  check-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read app.json version
+        id: version
+        run: |
+          VERSION=$(jq -r .version app.json)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check if utils changed
+        id: changed
+        run: |
+          git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | grep -q "eaglewrap-runner-example/eagleWrapUtils.js" && echo "changed=true" >> $GITHUB_OUTPUT || echo "changed=false" >> $GITHUB_OUTPUT
+
+      - name: Create or Update Release
+        if: steps.changed.outputs.changed == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          files: |
+            eaglewrap-runner-example/eagleWrapUtils.js
+          draft: false
+          prerelease: false
+
+  build-and-publish:
+    needs: check-and-release
+    uses: ./.github/workflows/python-publish.yml
