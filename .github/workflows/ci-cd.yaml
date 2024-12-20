@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'app.json'
+      - 'pyproject.toml'
       - 'eaglewrap-runner-example/eagleWrapUtils.js'
 
 jobs:
@@ -13,10 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Read app.json version
+      - name: Read pyproject.toml version
         id: version
         run: |
-          VERSION=$(jq -r .version app.json)
+          VERSION=$(grep -m1 'version = ' pyproject.toml | cut -d'"' -f2)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Check if utils changed
