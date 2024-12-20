@@ -1,6 +1,7 @@
 name: CI/CD
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'app.json'
@@ -36,3 +37,5 @@ jobs:
   build-and-publish:
     needs: check-and-release
     uses: ./.github/workflows/python-publish.yml
+    permissions:
+      id-token: write
