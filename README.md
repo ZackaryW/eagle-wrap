@@ -1,3 +1,5 @@
+> deprecated, newest implementation TBD at https://github.com/orgs/eagle-cooler/repositories
+
 # eagle-wrap
 wrapper for eagle.cool
 
